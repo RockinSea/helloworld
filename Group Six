@@ -1,0 +1,87 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <fstream>
+#include <cctype>
+#include <iomanip>
+#include <conio.h>
+#include <sstream>
+using namespace std;
+
+struct book
+{
+    char book_name[100];//书名
+    char author_name[30];//作者
+    int num;//编号
+    int price;//价格
+    int left;//剩余量
+    
+};
+typedef struct
+{
+	//用户结构 
+	int user_status=0;              //数据状态，0：正常   1：删除    2：借书逾期 
+	char user_num[7]="0";             //用户账号
+	char user_passwd[7]="0";          //用户密码 
+	char user_name[20]="0";           //用户姓名
+}UserType;
+
+bool cmpBynum(book a,book b)//对书的编号排序 
+    {
+    	return a.num<b.num;
+    }
+bool cmpByuser_num(UserType a,UserType b)//对学生编号排序 
+    {
+    	return a.user_num<b.user_num;
+    }
+class Library
+{
+	public:
+		Library();
+		void sortbook(int ca);//排序图书 
+		void sortstudent(int ca); //排序学生 
+	private:
+		vector<book> data;
+		vector<student> data1;
+};
+
+Library::Library()
+{
+	ifstream fin("book.csv");
+	string line;
+	while (getline(fin,line))
+	{
+		istringstream sin(line);
+		string datas;
+		while(getline(sin,datas,','))
+		{
+			data.push_back(datas);
+		}
+	}
+	fin.close();
+	
+	ifstream tfin("student.csv")
+    string line;
+	while(getline(tfin,line))
+	{
+		istringstream sin(line);
+		string data1s;
+		while(getline(sin,data1s,','))
+		{
+			 data1.push_back(datas1);
+		}
+	}
+    tfin.close();
+}
+
+void Library::sortbook(int ca)
+{
+	sort(data.begin(),data.end(),cmpBynum);
+}
+void Library::sortstudent(int ca)
+{
+	sort(data1.begin(),data1.end(),cmpByuser_num);
+}
